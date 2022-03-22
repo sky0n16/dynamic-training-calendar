@@ -1,0 +1,24 @@
+{
+  "name": "dynamic-training-calendar",
+  "version": "1.0.0",
+  "description": "uses strava api to create a dynamic workout and training calendar",
+  "main": "cal.js",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "node-fetch": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm run cal.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sky0n16/Dynamic-Training-Calendar-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sky0n16/Dynamic-Training-Calendar-api/issues"
+  },
+  "homepage": "https://github.com/sky0n16/Dynamic-Training-Calendar-api#readme"
+}
