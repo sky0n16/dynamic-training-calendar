@@ -1,9 +1,9 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 
-var access_token;
 
 async function getAccessToken(){
 
@@ -26,29 +26,43 @@ async function getAccessToken(){
     const body = await res.json();
     //console.log(body);
     return body;
-    return
     
 };
 
 function returnAccessToken(res){
+    //console.log(res.access_token);
     return res.access_token;
 }
 
-function getActivities(res){
+async function getActivities(res, afterTime){ //pulls activity data from strava with an after time attribute to filet different days
     
-    const activitiesLink = "https://www.strava.com/api/v3/athlete/activities?access_token=" + returnAccessToken(res) + "&after=1645407308"
-    fetch(activitiesLink)
-    .then(res => res.json())
-    .then(json => console.log(json));
+    const activitiesLink = "https://www.strava.com/api/v3/athlete/activities?access_token=" + returnAccessToken(res) + '&after=' + afterTime
+    const activities = await fetch(activitiesLink)
+        .then(res => res.json())
+    const data = await activities;
+    
+    return data;
 }
 
-async function main(){
+function getActivityData(data){
+    for(let i = 0; i < data.length; i++){
+        console.log(data[i].type);
+        console.log(data[i].id)
+        console.log(data[i].start_date);
+    }
+
+}
+
+
+async function main(afterTime){
     const res = await getAccessToken();
-    getActivities(res);
+    const json = await getActivities(res, afterTime)
+    getActivityData(json);
+
 }
 
 
-main()
+main(1647833432)// get time frame from 11am - 3 am in epoch time
 
 
 
@@ -57,3 +71,5 @@ main()
 
 
 //getActivities();
+
+//.then(data => console.log(JSON.stringify(data)));
