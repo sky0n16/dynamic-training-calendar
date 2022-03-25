@@ -10,7 +10,8 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', (error) => console.log('Connection established'))
 
-const activityRouter = require('./routes/activity')
-app.use('/activity', activityRouter)
+app.use(express.json())
+const eventRouter = require('./routes/event')
+app.use('/event', eventRouter)
 
-app.listen(3001, () => console.log('Server started'))
+app.listen(3000, () => console.log('Server started'))
