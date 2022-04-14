@@ -1,9 +1,44 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const dotenv = require('dotenv');
-
+const express = require('express')
+const bodyParser = require('body-parser')
+const router = express.Router()
 dotenv.config();
+router.use(bodyParser.json())
 
 
+router.post('/', (req, res) => {
+    //console.log("webhook event received!", req.query, req.body);
+    //console.log(req.body.object_id);
+    //console.log(req.body.aspect_type)
+    if(req.body.aspect_type == 'create'){
+        activityID = req.body.object_id;
+        getData(activityID);
+    }
+    res.status(200).send('EVENT_RECEIVED');
+});
+
+  // Adds support for GET requests to our webhook
+router.get('/', (req, res) => {
+    // Your verify token. Should be a random string.
+    const VERIFY_TOKEN = "STRAVA";
+    // Parses the query params
+    let mode = req.query['hub.mode'];
+    let token = req.query['hub.verify_token'];
+    let challenge = req.query['hub.challenge'];
+    // Checks if a token and mode is in the query string of the request
+    if (mode && token) {
+      // Verifies that the mode and token sent are valid
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {     
+        // Responds with the challenge token from the request
+        console.log('WEBHOOK_VERIFIED');
+        res.json({"hub.challenge":challenge});  
+    } else {
+        // Responds with '403 Forbidden' if verify tokens do not match
+        res.sendStatus(403);      
+    }
+    }
+});
 
 async function getAccessToken(){
 
@@ -50,8 +85,7 @@ function getActivityData(data){
 
 }
 
-
-async function main(activity){
+async function getData(activity){
     const res = await getAccessToken();
     const json = await getActivities(res, activity)
     //console.log(json)
@@ -60,14 +94,6 @@ async function main(activity){
 }
 
 
-main(6982243130)// get time frame from 11am - 3 am in epoch time
 
 
-
-//console.log()
-//getAccessToken()
-
-
-//getActivities();
-
-//.then(data => console.log(JSON.stringify(data)));
+module.exports = router;

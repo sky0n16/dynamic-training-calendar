@@ -1,11 +1,10 @@
 // this is where the user will be able to create an events in the event db
 // and adjust events database
-
 const express = require('express')
 const router = express.Router()
 const Event = require('../models/event')
 
-
+router.use(express.json())
 //get all
 router.get('/', async (req, res) => {
     try{
@@ -47,7 +46,7 @@ router.patch('/:id', getEvent, async (req, res) => {
     if (req.body.dueDate != null) {
         res.event.dueDate = req.body.dueDate
     }
-    if (req.body.repeatDays != null) {
+    if (req.body.repenatDays != null) {
         res.event.repeatDays = req.body.repeatDays
     }
     try {
@@ -69,6 +68,8 @@ router.delete('/:id', getEvent, async (req,res) => {
 
 })
 
+
+//middleware
 async function getEvent(req, res, next) {
     let event
     try{

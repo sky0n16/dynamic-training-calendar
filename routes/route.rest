@@ -3,7 +3,7 @@ GET http://localhost:3000/event
 
 ###
 
-GET http://localhost:3000/event/623ab5198c0c6b13ea08fa6a
+GET http://localhost:3000/event/623df203a249132cfa0ec523
 
 ###
 
@@ -11,21 +11,21 @@ POST http://localhost:3000/event
 Content-Type: application/json
 
 {
-    "name":"Gym time",
-    "type":"Weight Training",
-    "dueDate": "2022-02-22T19:31:14Z",
-    "repeatDays": "MWF"
+    "name":"Walk",
+    "type":"Walk",
+    "dueDate": "2022-05-22T19:31:14Z",
+    "repeatDays": "F"
 }
 
 ###
 
-DELETE http://localhost:3000/event/623b6a630a677d152bfa523b
+DELETE http://localhost:3000/event/623df203a249132cfa0ec523
 
 ###
 
-PATCH http://localhost:3000/event/623b6a74bc2e789ea204fce8
+PATCH http://localhost:3000/event/623df203a249132cfa0ec523
 Content-Type: application/json
 
 {
-    "repeatDays":"MW"
+    "type": "Walk"
 }

@@ -4,6 +4,7 @@
   "description": "uses strava api to create a dynamic workout and training calendar",
   "main": "cal.js",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongoose": "^6.2.7",
