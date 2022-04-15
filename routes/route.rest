@@ -3,7 +3,7 @@ GET http://localhost:3000/event
 
 ###
 
-GET http://localhost:3000/event/623df203a249132cfa0ec523
+GET http://localhost:3000/event/625880ab8740afb90a5bcc84
 
 ###
 
@@ -11,21 +11,22 @@ POST http://localhost:3000/event
 Content-Type: application/json
 
 {
-    "name":"Walk",
+    "name":"Afternoon Walk",
     "type":"Walk",
     "dueDate": "2022-05-22T19:31:14Z",
-    "repeatDays": "F"
+    "repeatDays": "MWF"
 }
 
 ###
 
-DELETE http://localhost:3000/event/623df203a249132cfa0ec523
+DELETE http://localhost:3000/event/623d0b1ac72a39ad4d809079
 
 ###
 
-PATCH http://localhost:3000/event/623df203a249132cfa0ec523
+PATCH http://localhost:3000/event/6258afe3f53a7849274d1507
 Content-Type: application/json
 
+
 {
-    "type": "Walk"
+    "completed": false
 }

@@ -5,15 +5,17 @@ const bodyParser = require('body-parser')
 const router = express.Router()
 dotenv.config();
 router.use(bodyParser.json())
+const Event = require('../models/event')
 
-
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     //console.log("webhook event received!", req.query, req.body);
     //console.log(req.body.object_id);
     //console.log(req.body.aspect_type)
     if(req.body.aspect_type == 'create'){
         activityID = req.body.object_id;
-        getData(activityID);
+        data = await getData(activityID);
+        activityComplete(data.type)
+
     }
     res.status(200).send('EVENT_RECEIVED');
 });
@@ -40,6 +42,27 @@ router.get('/', (req, res) => {
     }
 });
 
+// data
+async function activityComplete(dbField){
+    if (await Event.exists({type: dbField})){
+        const event = await Event.findOne(
+            {type: dbField}
+            );
+        //console.log(await event)
+        event.completed = true;
+        //console.log(await event)
+        await event.save()
+    } else {
+        console.log('No event with that type ignoring activity')
+    }
+    //await event.save()
+    //console.log(event)
+    //
+    //res.json(updatedEvent)
+
+}
+
+
 async function getAccessToken(){
 
     const authLink = "https://www.strava.com/oauth/token"
@@ -63,6 +86,9 @@ async function getAccessToken(){
     return body;
     
 };
+
+
+
 
 function returnAccessToken(res){
     //console.log(res.access_token);
@@ -90,7 +116,7 @@ async function getData(activity){
     const json = await getActivities(res, activity)
     //console.log(json)
     getActivityData(json);
-
+    return json;
 }
 
 

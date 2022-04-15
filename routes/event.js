@@ -46,9 +46,12 @@ router.patch('/:id', getEvent, async (req, res) => {
     if (req.body.dueDate != null) {
         res.event.dueDate = req.body.dueDate
     }
-    if (req.body.repenatDays != null) {
+    if (req.body.repeatDays != null) {
         res.event.repeatDays = req.body.repeatDays
     }
+    if (req.body.completed != null) {//remove after testing
+        res.event.completed = req.body.completed//remove
+    }//remove
     try {
         const updatedEvent = await res.event.save()
         res.json(updatedEvent)
