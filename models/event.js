@@ -9,10 +9,6 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    dueDate:{
-        type: Date,
-        required: true
-    },
     repeatDays:{
         type: String,
         required: true

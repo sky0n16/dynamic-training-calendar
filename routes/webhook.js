@@ -8,13 +8,10 @@ router.use(bodyParser.json())
 const Event = require('../models/event')
 
 router.post('/', async (req, res) => {
-    //console.log("webhook event received!", req.query, req.body);
-    //console.log(req.body.object_id);
-    //console.log(req.body.aspect_type)
     if(req.body.aspect_type == 'create'){
         activityID = req.body.object_id;
         data = await getData(activityID);
-        activityComplete(data.type)
+        activityCompleted(data.type)
 
     }
     res.status(200).send('EVENT_RECEIVED');
@@ -43,7 +40,7 @@ router.get('/', (req, res) => {
 });
 
 // data
-async function activityComplete(dbField){
+async function activityCompleted(dbField){
     if (await Event.exists({type: dbField})){
         const event = await Event.findOne(
             {type: dbField}
@@ -55,10 +52,6 @@ async function activityComplete(dbField){
     } else {
         console.log('No event with that type ignoring activity')
     }
-    //await event.save()
-    //console.log(event)
-    //
-    //res.json(updatedEvent)
 
 }
 
@@ -82,13 +75,9 @@ async function getAccessToken(){
         })
     });
     const body = await res.json();
-    //console.log(body);
     return body;
     
 };
-
-
-
 
 function returnAccessToken(res){
     //console.log(res.access_token);
@@ -118,8 +107,5 @@ async function getData(activity){
     getActivityData(json);
     return json;
 }
-
-
-
 
 module.exports = router;

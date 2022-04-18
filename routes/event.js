@@ -43,9 +43,6 @@ router.patch('/:id', getEvent, async (req, res) => {
     if (req.body.type != null) {
         res.event.type = req.body.type
     }
-    if (req.body.dueDate != null) {
-        res.event.dueDate = req.body.dueDate
-    }
     if (req.body.repeatDays != null) {
         res.event.repeatDays = req.body.repeatDays
     }
